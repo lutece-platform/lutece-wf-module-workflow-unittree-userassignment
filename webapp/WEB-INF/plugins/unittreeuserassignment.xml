@@ -7,8 +7,8 @@
     <installation></installation>
     <changes></changes>
     <user-guide></user-guide>
-    <description>module.unittreeuserassignment.module.description</description>
-    <provider>module.unittreeuserassignment.module.provider</provider>
+    <description>module.workflow.unittreeuserassignment.module.description</description>
+    <provider>module.workflow.unittreeuserassignment.module.provider</provider>
     <provider-url>https://dev.lutece.paris.fr</provider-url>
     <icon-url>images/admin/skin/feature_default_icon.png</icon-url>
     <copyright>Copyright (c) 2002-2019, Mairie de Paris</copyright>
