@@ -6,5 +6,6 @@
 
 	<!-- UnittreeAdminUserListProvider -->
 	<bean id="unittreeuserassignment.unittreeAdminUserListProvider" class="fr.paris.lutece.plugins.workflow.modules.unittreeuserassignment.business.UnittreeAdminUserListProvider"/>
-
+	
+	<bean id="unittreeuserassignment.changeUnitEventHandler" class="fr.paris.lutece.plugins.workflow.modules.unittreeuserassignment.util.ChangeUnitEventHandler"/>
 </beans>
