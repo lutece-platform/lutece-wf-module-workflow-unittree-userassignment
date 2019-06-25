@@ -5,9 +5,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import fr.paris.lutece.plugins.unittree.business.assignment.UnitAssignment;
+import fr.paris.lutece.plugins.unittree.business.assignment.UnitAssignmentHome;
 import fr.paris.lutece.plugins.unittree.business.unit.UnitHome;
-import fr.paris.lutece.plugins.workflow.modules.unittree.business.assignment.UnitAssignment;
-import fr.paris.lutece.plugins.workflow.modules.unittree.business.assignment.UnitAssignmentHome;
 import fr.paris.lutece.plugins.workflow.modules.userassignment.business.IAdminUserListProvider;
 import fr.paris.lutece.portal.business.user.AdminUser;
 import fr.paris.lutece.portal.business.user.AdminUserHome;

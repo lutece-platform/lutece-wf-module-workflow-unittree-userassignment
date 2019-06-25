@@ -6,8 +6,8 @@ import javax.inject.Inject;
 
 import org.springframework.context.ApplicationListener;
 
+import fr.paris.lutece.plugins.unittree.business.assignment.UnitAssignment;
 import fr.paris.lutece.plugins.unittree.business.unit.UnitHome;
-import fr.paris.lutece.plugins.workflow.modules.unittree.business.assignment.UnitAssignment;
 import fr.paris.lutece.plugins.workflow.modules.unittree.util.ChangeUnitEvent;
 import fr.paris.lutece.plugins.workflow.modules.userassignment.business.IResourceUserDAO;
 import fr.paris.lutece.plugins.workflow.service.WorkflowPlugin;
