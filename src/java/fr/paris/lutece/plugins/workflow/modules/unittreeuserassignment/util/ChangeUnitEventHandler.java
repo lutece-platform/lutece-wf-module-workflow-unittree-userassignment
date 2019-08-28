@@ -18,30 +18,31 @@ import fr.paris.lutece.portal.service.plugin.PluginService;
 /**
  * Event handler for {@link ChangeUnitEvent}
  */
-public class ChangeUnitEventHandler implements ApplicationListener<ChangeUnitEvent> {
+public class ChangeUnitEventHandler implements ApplicationListener<ChangeUnitEvent>
+{
 
-	@Inject
-	private IResourceUserDAO resourceUserDAO;
-	
-	@Override
-	public void onApplicationEvent(ChangeUnitEvent event) {
-		final Plugin plugin = PluginService.getPlugin( WorkflowPlugin.PLUGIN_NAME );
-		for ( UnitAssignment assignment : event.getOldAssignmentList( ) )
-		{
-			List<AdminUser> userList = 
-					resourceUserDAO.selectUserListByResource( assignment.getIdResource( ), assignment.getResourceType( ), plugin );
-			
-			List<Integer> userIdList = UnitHome.findIdsUser( assignment.getIdAssignedUnit( ) );
-			
-			for ( AdminUser user : userList )
-			{
-				if ( userIdList.contains( user.getUserId( ) ) )
-				{
-					resourceUserDAO.deactivateByUserResource( user.getUserId( ), assignment.getIdResource( ), assignment.getResourceType( ), plugin );
-				}
-			}
-			
-		}
-	}
+    @Inject
+    private IResourceUserDAO resourceUserDAO;
+
+    @Override
+    public void onApplicationEvent( ChangeUnitEvent event )
+    {
+        final Plugin plugin = PluginService.getPlugin( WorkflowPlugin.PLUGIN_NAME );
+        for ( UnitAssignment assignment : event.getOldAssignmentList( ) )
+        {
+            List<AdminUser> userList = resourceUserDAO.selectUserListByResource( assignment.getIdResource( ), assignment.getResourceType( ), plugin );
+
+            List<Integer> userIdList = UnitHome.findIdsUser( assignment.getIdAssignedUnit( ) );
+
+            for ( AdminUser user : userList )
+            {
+                if ( userIdList.contains( user.getUserId( ) ) )
+                {
+                    resourceUserDAO.deactivateByUserResource( user.getUserId( ), assignment.getIdResource( ), assignment.getResourceType( ), plugin );
+                }
+            }
+
+        }
+    }
 
 }

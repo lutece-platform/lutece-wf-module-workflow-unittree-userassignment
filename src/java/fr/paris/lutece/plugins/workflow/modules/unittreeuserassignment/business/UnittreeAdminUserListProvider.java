@@ -15,41 +15,42 @@ import fr.paris.lutece.portal.business.user.AdminUserHome;
 /**
  * An implementation of {@link IAdminUserListProvider} which returns the users of an unit.
  */
-public class UnittreeAdminUserListProvider implements IAdminUserListProvider {
+public class UnittreeAdminUserListProvider implements IAdminUserListProvider
+{
 
-	private static final String MESSAGE_LABEL = "module.workflow.unittreeuserassignment.task.user.assign.config.unittree";
-	
-	private static final String NAME = "unittree";
-	
-	@Override
-	public String getLabelKey( )
-	{
-		return MESSAGE_LABEL;
-	}
+    private static final String MESSAGE_LABEL = "module.workflow.unittreeuserassignment.task.user.assign.config.unittree";
 
-	@Override
-	public String getName( )
-	{
-		return NAME;
-	}
+    private static final String NAME = "unittree";
 
-	@Override
-	public List<AdminUser> getUserList( HttpServletRequest request, int resourceId, String resourceType )
-	{
-		List<AdminUser> userList = new ArrayList<>( );
-		
-		List<UnitAssignment> assignmentList = UnitAssignmentHome.findByResource( resourceId, resourceType );
-		for ( UnitAssignment assignment : assignmentList )
-		{
-			if ( assignment.isActive( ) )
-			{
-				List<Integer> userIds = UnitHome.findIdsUser( assignment.getAssignedUnit( ).getIdUnit( ) );
-				for ( Integer userId : userIds ) 
-				{
-					userList.add(AdminUserHome.findByPrimaryKey( userId ) );
-				}
-			}
-		}
-		return userList;
-	}
+    @Override
+    public String getLabelKey( )
+    {
+        return MESSAGE_LABEL;
+    }
+
+    @Override
+    public String getName( )
+    {
+        return NAME;
+    }
+
+    @Override
+    public List<AdminUser> getUserList( HttpServletRequest request, int resourceId, String resourceType )
+    {
+        List<AdminUser> userList = new ArrayList<>( );
+
+        List<UnitAssignment> assignmentList = UnitAssignmentHome.findByResource( resourceId, resourceType );
+        for ( UnitAssignment assignment : assignmentList )
+        {
+            if ( assignment.isActive( ) )
+            {
+                List<Integer> userIds = UnitHome.findIdsUser( assignment.getAssignedUnit( ).getIdUnit( ) );
+                for ( Integer userId : userIds )
+                {
+                    userList.add( AdminUserHome.findByPrimaryKey( userId ) );
+                }
+            }
+        }
+        return userList;
+    }
 }
