@@ -22,7 +22,7 @@ public class ChangeUnitEventHandler implements ApplicationListener<ChangeUnitEve
 {
 
     @Inject
-    private IResourceUserDAO resourceUserDAO;
+    private IResourceUserDAO _resourceUserDAO;
 
     @Override
     public void onApplicationEvent( ChangeUnitEvent event )
@@ -30,7 +30,7 @@ public class ChangeUnitEventHandler implements ApplicationListener<ChangeUnitEve
         final Plugin plugin = PluginService.getPlugin( WorkflowPlugin.PLUGIN_NAME );
         for ( UnitAssignment assignment : event.getOldAssignmentList( ) )
         {
-            List<AdminUser> userList = resourceUserDAO.selectUserListByResource( assignment.getIdResource( ), assignment.getResourceType( ), plugin );
+            List<AdminUser> userList = _resourceUserDAO.selectUserListByResource( assignment.getIdResource( ), assignment.getResourceType( ), plugin );
 
             List<Integer> userIdList = UnitHome.findIdsUser( assignment.getIdAssignedUnit( ) );
 
@@ -38,7 +38,7 @@ public class ChangeUnitEventHandler implements ApplicationListener<ChangeUnitEve
             {
                 if ( userIdList.contains( user.getUserId( ) ) )
                 {
-                    resourceUserDAO.deactivateByUserResource( user.getUserId( ), assignment.getIdResource( ), assignment.getResourceType( ), plugin );
+                    _resourceUserDAO.deactivateByUserResource( user.getUserId( ), assignment.getIdResource( ), assignment.getResourceType( ), plugin );
                 }
             }
 
