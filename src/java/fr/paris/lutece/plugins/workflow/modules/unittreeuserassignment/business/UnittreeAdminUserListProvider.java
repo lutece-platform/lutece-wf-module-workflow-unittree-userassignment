@@ -47,7 +47,11 @@ public class UnittreeAdminUserListProvider implements IAdminUserListProvider
                 List<Integer> userIds = UnitHome.findIdsUser( assignment.getAssignedUnit( ).getIdUnit( ) );
                 for ( Integer userId : userIds )
                 {
-                    userList.add( AdminUserHome.findByPrimaryKey( userId ) );
+                    AdminUser user = AdminUserHome.findByPrimaryKey( userId );
+                    if ( user != null )
+                    {
+                        userList.add( user );
+                    }
                 }
             }
         }
