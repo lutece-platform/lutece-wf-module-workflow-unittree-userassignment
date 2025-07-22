@@ -3,7 +3,9 @@ package fr.paris.lutece.plugins.workflow.modules.unittreeuserassignment.business
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Named;
+import jakarta.servlet.http.HttpServletRequest;
 
 import fr.paris.lutece.plugins.unittree.business.assignment.UnitAssignment;
 import fr.paris.lutece.plugins.unittree.business.assignment.UnitAssignmentHome;
@@ -15,6 +17,8 @@ import fr.paris.lutece.portal.business.user.AdminUserHome;
 /**
  * An implementation of {@link IAdminUserListProvider} which returns the users of an unit.
  */
+@ApplicationScoped
+@Named( "unittreeuserassignment.unittreeAdminUserListProvider" )
 public class UnittreeAdminUserListProvider implements IAdminUserListProvider
 {
 
