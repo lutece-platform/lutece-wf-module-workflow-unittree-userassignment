@@ -2,9 +2,7 @@ package fr.paris.lutece.plugins.workflow.modules.unittreeuserassignment.util;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
-import org.springframework.context.ApplicationListener;
+import jakarta.inject.Inject;
 
 import fr.paris.lutece.plugins.unittree.business.assignment.UnitAssignment;
 import fr.paris.lutece.plugins.unittree.business.unit.UnitHome;
@@ -14,18 +12,22 @@ import fr.paris.lutece.plugins.workflow.service.WorkflowPlugin;
 import fr.paris.lutece.portal.business.user.AdminUser;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.event.Observes;
+import jakarta.inject.Named;
 
 /**
  * Event handler for {@link ChangeUnitEvent}
  */
-public class ChangeUnitEventHandler implements ApplicationListener<ChangeUnitEvent>
+@ApplicationScoped
+@Named( "unittreeuserassignment.changeUnitEventHandler" )
+public class ChangeUnitEventHandler
 {
 
     @Inject
     private IResourceUserDAO _resourceUserDAO;
 
-    @Override
-    public void onApplicationEvent( ChangeUnitEvent event )
+    public void onApplicationEvent( @Observes ChangeUnitEvent event )
     {
         final Plugin plugin = PluginService.getPlugin( WorkflowPlugin.PLUGIN_NAME );
         for ( UnitAssignment assignment : event.getOldAssignmentList( ) )
