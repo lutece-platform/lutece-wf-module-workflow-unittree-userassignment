@@ -10,7 +10,7 @@
     <groupId>fr.paris.lutece.plugins</groupId>
     <artifactId>module-workflow-unittree-userassignment</artifactId>
     <packaging>lutece-plugin</packaging>
-    <version>1.0.2-beta-01</version>
+    <version>1.0.2</version>
     <name>Lutece unittreeuserassignment plugin</name>
 
     <repositories>
