@@ -1,5 +1,7 @@
 package fr.paris.lutece.plugins.workflow.modules.unittreeuserassignment.util;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import jakarta.inject.Inject;
@@ -30,21 +32,45 @@ public class ChangeUnitEventHandler
     public void onApplicationEvent( @Observes ChangeUnitEvent event )
     {
         final Plugin plugin = PluginService.getPlugin( WorkflowPlugin.PLUGIN_NAME );
+        UnitAssignment newAssignment = event.getNewAssignment( );
+        List<Integer> newUnitUserIdList = newAssignment == null ? Collections.emptyList( ) : UnitHome.findIdsUser( newAssignment.getIdAssignedUnit( ) );
+
         for ( UnitAssignment assignment : event.getOldAssignmentList( ) )
         {
             List<AdminUser> userList = _resourceUserDAO.selectUserListByResource( assignment.getIdResource( ), assignment.getResourceType( ), plugin );
 
             List<Integer> userIdList = UnitHome.findIdsUser( assignment.getIdAssignedUnit( ) );
 
-            for ( AdminUser user : userList )
+            for ( Integer nIdUser : findUsersToUnassign( userList, userIdList, newUnitUserIdList ) )
             {
-                if ( userIdList.contains( user.getUserId( ) ) )
-                {
-                    _resourceUserDAO.deactivateByUserResource( user.getUserId( ), assignment.getIdResource( ), assignment.getResourceType( ), plugin );
-                }
+                _resourceUserDAO.deactivateByUserResource( nIdUser, assignment.getIdResource( ), assignment.getResourceType( ), plugin );
             }
-
         }
+    }
+
+    /**
+     * The agents of the resource who leave it with the unit: members of the old unit who are not members of the unit that
+     * receives the resource (a transfer to the same unit, or to a unit the agent also belongs to, keeps the agent)
+     * 
+     * @param listAssignedUser
+     *            the agents assigned to the resource
+     * @param listOldUnitUserId
+     *            the members of the old unit
+     * @param listNewUnitUserId
+     *            the members of the unit that receives the resource (empty for an unassignment)
+     * @return the ids of the agents to unassign
+     */
+    static List<Integer> findUsersToUnassign( List<AdminUser> listAssignedUser, List<Integer> listOldUnitUserId, List<Integer> listNewUnitUserId )
+    {
+        List<Integer> listUserToUnassign = new ArrayList<>( );
+        for ( AdminUser user : listAssignedUser )
+        {
+            if ( listOldUnitUserId.contains( user.getUserId( ) ) && !listNewUnitUserId.contains( user.getUserId( ) ) )
+            {
+                listUserToUnassign.add( user.getUserId( ) );
+            }
+        }
+        return listUserToUnassign;
     }
 
 }
