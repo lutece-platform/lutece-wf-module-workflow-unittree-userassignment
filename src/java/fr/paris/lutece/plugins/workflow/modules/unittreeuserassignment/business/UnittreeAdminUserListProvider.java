@@ -52,7 +52,7 @@ public class UnittreeAdminUserListProvider implements IAdminUserListProvider
                 for ( Integer userId : userIds )
                 {
                     AdminUser user = AdminUserHome.findByPrimaryKey( userId );
-                    if ( user != null )
+                    if ( isOffered( user ) )
                     {
                         userList.add( user );
                     }
@@ -60,5 +60,18 @@ public class UnittreeAdminUserListProvider implements IAdminUserListProvider
             }
         }
         return userList;
+    }
+
+    /**
+     * Tells whether a member of the unit can be given the resource: only an active administrator (a disabled, expired or
+     * anonymized account cannot work on it)
+     * 
+     * @param user
+     *            the member, may be null
+     * @return true when the user can be offered
+     */
+    static boolean isOffered( AdminUser user )
+    {
+        return user != null && user.getStatus( ) == AdminUser.ACTIVE_CODE;
     }
 }
